@@ -27,8 +27,18 @@ const textFileName = "test.txt";
 const textfilePath = path.join(process.cwd(),textFileName);
 
 try {
-    fs.writeFile(textfilePath, '', 'utf8');
+    fs.writeFile(textfilePath, '04072113022', 'utf8');
     console.log(' Text File created successfully');
 } catch (error) {    
     console.error(error && error.message);
 }
+
+
+try {
+    const data = await fs.readFile(textfilePath, 'utf8');
+    console.log('Data read from the file :', data);
+    console.log('Text File read successfully');
+    
+} catch (error) {
+    console.error(error && error.message);
+} 
