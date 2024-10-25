@@ -1,0 +1,16 @@
+{
+  "name": "part-4",
+  "version": "1.0.0",
+  "main": "part_4.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "part-4": "file:"
+  }
+}
