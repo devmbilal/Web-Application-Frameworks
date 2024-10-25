@@ -42,3 +42,25 @@ try {
 } catch (error) {
     console.error(error && error.message);
 } 
+
+
+/*  Write code to overwrite your registration number in the “test.txt” 
+with the last four digits of your registration number */
+
+try {
+    fs.writeFile(textfilePath, '3022', 'utf8');
+    console.log(' Text File created successfully');
+} catch (error) {    
+    console.error(error && error.message);
+}
+
+// . Repeat step 6 to read the file and print the data to the console.
+
+try {
+    const data = await fs.readFile(textfilePath, 'utf8');
+    console.log('Data read from the file :', data);
+    console.log('Text File read successfully');
+    
+} catch (error) {
+    console.error(error && error.message);
+} 
