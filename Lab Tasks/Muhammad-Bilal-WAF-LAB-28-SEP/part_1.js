@@ -13,12 +13,22 @@ try {
     console.error(error && error.message);
 }
 
-const fileName = "(muhamamd_bilal_waf_lab_28sep";
+const fileName = "(muhamamd_bilal_waf_lab_28sep.js";
 const filePath = path.join(process.cwd(),fileName);
 
 try {
     fs.writeFile(filePath, '', 'utf8');
-    console.log('File created successfully');
+    console.log('JS File created successfully');
+} catch (error) {    
+    console.error(error && error.message);
+}
+
+const textFileName = "test.txt";
+const textfilePath = path.join(process.cwd(),textFileName);
+
+try {
+    fs.writeFile(textfilePath, '', 'utf8');
+    console.log(' Text File created successfully');
 } catch (error) {    
     console.error(error && error.message);
 }
