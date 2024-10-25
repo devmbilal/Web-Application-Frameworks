@@ -64,3 +64,23 @@ try {
 } catch (error) {
     console.error(error && error.message);
 } 
+
+
+// Erase data from the file “test.txt”
+
+
+try {
+    fs.writeFile(textfilePath, '', 'utf8');
+    console.log(' Text File created successfully');
+} catch (error) {    
+    console.error(error && error.message);
+}
+
+
+// Rewrite Registration number in the “test.txt” file
+try {
+    fs.writeFile(textfilePath, '04072113022', 'utf8');
+    console.log(' Text File created successfully');
+} catch (error) {    
+    console.error(error && error.message);
+}
