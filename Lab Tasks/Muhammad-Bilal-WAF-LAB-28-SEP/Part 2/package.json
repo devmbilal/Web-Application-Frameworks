@@ -1,7 +1,7 @@
 {
-  "name": "muhammad-bilal-waf-lab-28-sep",
+  "name": "part-2",
   "version": "1.0.0",
-  "main": "part_1.js",
+  "main": "part_2.js",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -11,6 +11,6 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "muhammad-bilal-waf-lab-28-sep": "file:"
+    "part-2": "file:"
   }
 }
