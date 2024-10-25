@@ -2,8 +2,8 @@ import fs from 'fs/promises';
 import path from 'path';
 
 
-const folderName = 'part_1'; 
-const folderPath = path.join(process.cwd,folderName);
+const folderName = "part_1"; 
+const folderPath = path.join(process.cwd(),folderName);
 
 
 try {
