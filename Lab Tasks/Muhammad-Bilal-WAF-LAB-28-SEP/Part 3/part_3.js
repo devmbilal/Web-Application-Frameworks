@@ -100,3 +100,115 @@ signup(() => {
 // Email sent
 // All tasks completed.....
 
+// Using Promises
+function signup() {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            console.log("Signup completed");
+            resolve();
+        }, 2000);
+    });
+}
+
+function sendVerificationCode() {        
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            console.log("Verification code sent");
+            resolve();
+        }, 4000);
+    });
+}
+
+function signin() {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            console.log("Signin completed");
+            resolve();
+        }, 3500);
+    });
+}
+
+function getData() {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            console.log("Data received");
+            resolve();
+        }, 4500);
+    });
+}
+
+function checkEmail() {       
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            console.log("Email checked");
+            resolve();
+        }, 1500);
+    });
+}
+
+function composeEmail() {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            console.log("Email composed");
+            resolve();
+        }, 2000);
+    });
+}
+
+function sendEmail() {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            console.log("Email sent");
+            resolve();
+        }, 3000);
+    });
+}
+
+signup()
+    .then(sendVerificationCode)
+    .then(signin)
+    .then(getData)
+    .then(checkEmail)
+    .then(composeEmail)
+    .then(sendEmail)
+    .then(() => {
+        console.log("All tasks completed.....");
+    });
+
+// Output:  
+// Signup completed
+// Verification code sent
+// Signin completed
+// Data received
+// Email checked
+// Email composed
+// Email sent
+// All tasks completed.....
+
+// Using async/await
+async function main() {
+    await signup();
+    await sendVerificationCode();
+    await signin();
+    await getData();
+    await checkEmail();
+    await composeEmail();
+    await sendEmail();
+    console.log("All tasks completed.....");
+}
+
+main();
+
+// Output:
+// Signup completed
+// Verification code sent
+// Signin completed
+// Data received
+// Email checked
+// Email composed
+// Email sent
+// All tasks
+// completed.....
+// All tasks completed.....
+
+
