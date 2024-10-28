@@ -89,3 +89,14 @@ signup(() => {
         });
     });
 });
+
+// Output:
+// Signup completed
+// Verification code sent
+// Signin completed
+// Data received
+// Email checked
+// Email composed
+// Email sent
+// All tasks completed.....
+
