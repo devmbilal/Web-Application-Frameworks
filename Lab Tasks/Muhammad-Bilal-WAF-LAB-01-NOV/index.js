@@ -3,12 +3,10 @@ const fs = require("fs");
 const express = require("express");
 const app = express();
 
-app.use(express.urlencoded({ extended: false }));
 
-/*
-now we have to create get route read data from json file MOCK_DART.json and store it in variable then read that data and store it to 
-different files depending on the class of the ip address 
-*/
+app.use(express.json());
+
+// Get Route to read data from json file and store it in different files depending on the class of the ip address
 
 app.get("/readdata", (req, res) => {
   let classA = [];
@@ -33,7 +31,6 @@ app.get("/readdata", (req, res) => {
     } else {
       classF.push(user);
     }
-    
     fs.writeFile("classA.json", JSON.stringify(classA), (err) => {
       if (err) {
         throw err;
@@ -76,8 +73,9 @@ app.get("/readdata", (req, res) => {
   });
 
   res.send("Data stored successfully");
-} );  // end of get route
+} );  
 
+// Get Route to read data from the specific file depending on the class of the ip address
 app.get("/classA", (req, res) => {
   fs.readFile("classA.json", (err, data) => {
     if (err) {
@@ -87,9 +85,91 @@ app.get("/classA", (req, res) => {
     res.send(JSON.parse(data));
   }
   );
+}); 
 
+app.get("/classB", (req, res) => {  
+  fs.readFile("classB.json", (err, data) => {
+    if (err) {
+      throw err;
+    }
+
+    res.send(JSON.parse(data));
+  });
+});
+
+app.get("/classC", (req, res) => {
+  fs.readFile("classC.json", (err, data) => {
+    if (err) {
+      throw err;
+    }
+
+    res.send(JSON.parse(data));
+
+  });
+}
+);
+
+app.get("/classD", (req, res) => {
+  fs.readFile("classD.json", (err, data) => {
+    if (err) {
+      throw err;
+    }
+
+    res.send(JSON.parse(data));
+
+  });
+}
+);
+
+app.get("/classE", (req, res) => {
+
+  fs.readFile("classE.json", (err, data) => {
+    if (err) {
+      throw err;
+    }
+
+    res.send(JSON.parse(data));
+
+  }
+  );
+}
+);
+
+app.get("/classF", (req, res) => {
+  fs.readFile("classF.json", (err, data) => {
+    if (err) {
+      throw err;
+    }
+
+    res.send(JSON.parse(data));
+
+  });
+
+}
+);
+
+// Patch Route to update the data of a specific user using id for each specific file
+
+app.patch("/updateA/:id", (req, res) => {  
+  let id = req.params.id;
+  let data = req.body;
+  fs.readFile("classA.json", (err, users) => {
+    if (err) {
+      throw err;
+    }
+    let usersData = JSON.parse(users);
+    let index = usersData.findIndex((user) => user.id == id);
+    usersData[index] = data;
+    fs.writeFile("classA.json", JSON.stringify(usersData), (err) => {
+      if (err) {
+        throw err;
+      }
+    });
+    res.send("Data updated successfully");
+  });
+
+});
 
 app.listen(8080, () => {
   console.log("Server initiated ....");
 });
-}); 
