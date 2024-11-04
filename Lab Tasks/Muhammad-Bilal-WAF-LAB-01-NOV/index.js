@@ -152,14 +152,19 @@ app.get("/classF", (req, res) => {
 
 app.patch("/updateA/:id", (req, res) => {  
   let id = req.params.id;
+  console.log(id);
   let data = req.body;
+  console.log(data);
   fs.readFile("classA.json", (err, users) => {
     if (err) {
       throw err;
     }
     let usersData = JSON.parse(users);
+    console.log(usersData);
     let index = usersData.findIndex((user) => user.id == id);
+    console.log(index);
     usersData[index] = data;
+    console.log(usersData);
     fs.writeFile("classA.json", JSON.stringify(usersData), (err) => {
       if (err) {
         throw err;
@@ -169,6 +174,106 @@ app.patch("/updateA/:id", (req, res) => {
   });
 
 });
+
+app.patch("/updateB/:id", (req, res) => {
+  let id = req.params.id;
+  let data = req.body;
+  fs.readFile("classB.json", (err, users) => {
+    if (err) {
+      throw err;
+    }
+    let usersData = JSON.parse(users);
+    let index = usersData.findIndex((user) => user.id == id);
+    usersData[index] = data;
+    fs.writeFile("classB.json", JSON.stringify(usersData), (err) => {
+      if (err) {
+        throw err;
+      }
+    });
+    res.send("Data updated successfully");
+  });   
+}
+);
+
+app.patch("/updateC/:id", (req, res) => { 
+  let id = req.params.id;
+  let data = req.body;
+  fs.readFile("classC.json", (err, users) => {
+    if (err) {
+      throw err;
+    }
+    let usersData = JSON.parse(users);
+    let index = usersData.findIndex((user) => user.id == id);
+    usersData[index] = data;
+    fs.writeFile("classC.json", JSON.stringify(usersData), (err) => {
+      if (err) {
+        throw err;
+      }
+    });
+    res.send("Data updated successfully");
+  });
+}
+);
+
+app.patch("/updateD/:id", (req, res) => {
+  let id = req.params.id;
+  let data = req.body;
+  fs.readFile("classD.json", (err, users) => {
+    if (err) {
+      throw err;
+    }
+    let usersData = JSON.parse(users);
+    let index = usersData.findIndex((user) => user.id == id);
+    usersData[index] = data;
+    fs.writeFile("classD.json", JSON.stringify(usersData), (err) => {
+      if (err) {
+        throw err;
+      }
+    });
+    res.send("Data updated successfully");
+  });
+}
+);
+
+app.patch("/updateE/:id", (req, res) => {
+  let id = req.params.id;
+  let data = req.body;
+  fs.readFile("classE.json", (err, users) => {
+    if (err) {
+      throw err;
+    }
+    let usersData = JSON.parse(users);
+    let index = usersData.findIndex((user) => user.id == id);
+    usersData[index] = data;
+    fs.writeFile("classE.json", JSON.stringify(usersData), (err) => {
+      if (err) {
+        throw err;
+      }
+    });
+    res.send("Data updated successfully");
+  });
+}
+);
+
+app.patch("/updateF/:id", (req, res) => {
+  let id = req.params.id;
+  let data = req.body;
+  fs.readFile("classF.json", (err, users) => {
+    if (err) {
+      throw err;
+    }
+    let usersData = JSON.parse(users);
+    let index = usersData.findIndex((user) => user.id == id);
+    usersData[index] = data;
+    fs.writeFile("classF.json", JSON.stringify(usersData), (err) => {
+      if (err) {
+        throw err;
+      }
+    });
+    res.send("Data updated successfully");
+  });
+}
+);
 
 app.listen(8080, () => {
   console.log("Server initiated ....");
