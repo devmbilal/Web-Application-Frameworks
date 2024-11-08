@@ -110,6 +110,12 @@ app.delete("/api/users/:class", (req, res) => {
   else {
     users = classA.concat(classB, classC, classD, classE);
   }
+  fs.writeFile("MOCK_DATA.json", JSON.stringify(users), (err) => {
+    if (err) {
+      throw err;
+    }
+  });
+  
   res.send(users);
 });
 
