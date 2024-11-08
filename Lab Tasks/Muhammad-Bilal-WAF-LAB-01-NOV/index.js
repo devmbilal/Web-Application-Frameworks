@@ -2,11 +2,63 @@ const users = require("./MOCK_DATA.json");
 const fs = require("fs");
 const express = require("express");
 const app = express();
-
-
 app.use(express.json());
 
-// Get Route to read data from json file and store it in different files depending on the class of the ip address
+//  Read data from the Mock Data json file
+app.get("/api/users", (req, res) => {
+  res.send(users);
+});
+
+// GET /api/users/:id 
+app.get("/api/users/:id", (req, res) => {
+  const user = users.find((user) => user.id === parseInt(req.params.id));
+  if (!user) {
+    return res.status(404).send("The user with the given ID was not found");
+  }
+  res.send(user);
+});
+
+//GET /api/users/:name 
+app.get("/api/users/:name", (req, res) => {
+  const user = users.find((user) => user.first_name === req.params.name);
+  if (!user) {
+    return res.status(404).send("The user with the given name was not found");
+  }
+  res.send(user);
+});
+
+// POST /api/users
+app.post("/api/users", (req, res) => {
+  const user = {
+    id: users.length + 1,
+    first_name: req.body.first_name,
+    last_name: req.body.last_name,
+    email: req.body.email,
+    gender: req.body.gender,
+    ip_address: req.body.ip_address,
+    ORGANIZATION: req.body.ORGANIZATION,
+  };
+   
+  users.push(user);
+  res.send(user);
+});
+
+// PATCH /api/users/:id 
+app.patch("/api/users/:id", (req, res) => {
+  const user = users.find((user) => user.id === parseInt(req.params.id));
+  if (!user) {
+    return res.status(404).send("The user with the given ID was not found");
+  }
+  
+
+  res.send(user);
+});
+
+
+
+
+/* Get Route to read data from json file and store it in 
+different files depending on the class of the ip address*/
 
 app.get("/readdata", (req, res) => {
   let classA = [];
@@ -31,6 +83,7 @@ app.get("/readdata", (req, res) => {
     } else {
       classF.push(user);
     }
+
     fs.writeFile("classA.json", JSON.stringify(classA), (err) => {
       if (err) {
         throw err;
@@ -48,7 +101,6 @@ app.get("/readdata", (req, res) => {
         throw err;
       }
     });
-
 
     fs.writeFile("classD.json", JSON.stringify(classD), (err) => {
       if (err) {
@@ -73,10 +125,10 @@ app.get("/readdata", (req, res) => {
   });
 
   res.send("Data stored successfully");
-} );  
+});  
 
 // Get Route to read data from the specific file depending on the class of the ip address
-app.get("/classA", (req, res) => {
+app.get("/api/users/A", (req, res) => {
   fs.readFile("classA.json", (err, data) => {
     if (err) {
       throw err;
@@ -87,7 +139,7 @@ app.get("/classA", (req, res) => {
   );
 }); 
 
-app.get("/classB", (req, res) => {  
+app.get("/api/users/B", (req, res) => {  
   fs.readFile("classB.json", (err, data) => {
     if (err) {
       throw err;
@@ -97,7 +149,7 @@ app.get("/classB", (req, res) => {
   });
 });
 
-app.get("/classC", (req, res) => {
+app.get("/api/users/C", (req, res) => {
   fs.readFile("classC.json", (err, data) => {
     if (err) {
       throw err;
@@ -109,7 +161,7 @@ app.get("/classC", (req, res) => {
 }
 );
 
-app.get("/classD", (req, res) => {
+app.get("/api/users/D", (req, res) => {
   fs.readFile("classD.json", (err, data) => {
     if (err) {
       throw err;
@@ -121,7 +173,7 @@ app.get("/classD", (req, res) => {
 }
 );
 
-app.get("/classE", (req, res) => {
+app.get("/api/users/E", (req, res) => {
 
   fs.readFile("classE.json", (err, data) => {
     if (err) {
@@ -135,7 +187,7 @@ app.get("/classE", (req, res) => {
 }
 );
 
-app.get("/classF", (req, res) => {
+app.get("/api/users/F", (req, res) => {
   fs.readFile("classF.json", (err, data) => {
     if (err) {
       throw err;
@@ -148,132 +200,10 @@ app.get("/classF", (req, res) => {
 }
 );
 
-// Patch Route to update the data of a specific user using id for each specific file
 
-app.patch("/updateA/:id", (req, res) => {  
-  let id = req.params.id;
-  console.log(id);
-  let data = req.body;
-  console.log(data);
-  fs.readFile("classA.json", (err, users) => {
-    if (err) {
-      throw err;
-    }
-    let usersData = JSON.parse(users);
-    console.log(usersData);
-    let index = usersData.findIndex((user) => user.id == id);
-    console.log(index);
-    usersData[index] = data;
-    console.log(usersData);
-    fs.writeFile("classA.json", JSON.stringify(usersData), (err) => {
-      if (err) {
-        throw err;
-      }
-    });
-    res.send("Data updated successfully");
-  });
 
-});
 
-app.patch("/updateB/:id", (req, res) => {
-  let id = req.params.id;
-  let data = req.body;
-  fs.readFile("classB.json", (err, users) => {
-    if (err) {
-      throw err;
-    }
-    let usersData = JSON.parse(users);
-    let index = usersData.findIndex((user) => user.id == id);
-    usersData[index] = data;
-    fs.writeFile("classB.json", JSON.stringify(usersData), (err) => {
-      if (err) {
-        throw err;
-      }
-    });
-    res.send("Data updated successfully");
-  });   
-}
-);
 
-app.patch("/updateC/:id", (req, res) => { 
-  let id = req.params.id;
-  let data = req.body;
-  fs.readFile("classC.json", (err, users) => {
-    if (err) {
-      throw err;
-    }
-    let usersData = JSON.parse(users);
-    let index = usersData.findIndex((user) => user.id == id);
-    usersData[index] = data;
-    fs.writeFile("classC.json", JSON.stringify(usersData), (err) => {
-      if (err) {
-        throw err;
-      }
-    });
-    res.send("Data updated successfully");
-  });
-}
-);
-
-app.patch("/updateD/:id", (req, res) => {
-  let id = req.params.id;
-  let data = req.body;
-  fs.readFile("classD.json", (err, users) => {
-    if (err) {
-      throw err;
-    }
-    let usersData = JSON.parse(users);
-    let index = usersData.findIndex((user) => user.id == id);
-    usersData[index] = data;
-    fs.writeFile("classD.json", JSON.stringify(usersData), (err) => {
-      if (err) {
-        throw err;
-      }
-    });
-    res.send("Data updated successfully");
-  });
-}
-);
-
-app.patch("/updateE/:id", (req, res) => {
-  let id = req.params.id;
-  let data = req.body;
-  fs.readFile("classE.json", (err, users) => {
-    if (err) {
-      throw err;
-    }
-    let usersData = JSON.parse(users);
-    let index = usersData.findIndex((user) => user.id == id);
-    usersData[index] = data;
-    fs.writeFile("classE.json", JSON.stringify(usersData), (err) => {
-      if (err) {
-        throw err;
-      }
-    });
-    res.send("Data updated successfully");
-  });
-}
-);
-
-app.patch("/updateF/:id", (req, res) => {
-  let id = req.params.id;
-  let data = req.body;
-  fs.readFile("classF.json", (err, users) => {
-    if (err) {
-      throw err;
-    }
-    let usersData = JSON.parse(users);
-    let index = usersData.findIndex((user) => user.id == id);
-    usersData[index] = data;
-    fs.writeFile("classF.json", JSON.stringify(usersData), (err) => {
-      if (err) {
-        throw err;
-      }
-    });
-    res.send("Data updated successfully");
-  });
-}
-);
 
 app.listen(8080, () => {
   console.log("Server initiated ....");
