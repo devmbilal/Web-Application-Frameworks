@@ -43,18 +43,75 @@ app.post("/api/users", (req, res) => {
   res.send(user);
 });
 
-// PATCH /api/users/:id 
-app.patch("/api/users/:id", (req, res) => {
+// PUT /api/users/:id 
+app.put("/api/users/:id", (req, res) => {
   const user = users.find((user) => user.id === parseInt(req.params.id));
   if (!user) {
     return res.status(404).send("The user with the given ID was not found");
   }
   
-
+  user.first_name = req.body.first_name;
+  user.last_name = req.body.last_name;
+  user.email = req.body.email;
+  user.gender = req.body.gender;
+  user.ip_address = req.body.ip_address;
+  user.ORGANIZATION = req.body.ORGANIZATION;
   res.send(user);
 });
 
+// DELETE /api/users/:id 
+app.delete("/api/users/:id", (req, res) => {
+  const user = users.find((user) => user.id === parseInt(req.params.id));
+  if (!user) {
+    return res.status(404).send("The user with the given ID was not found");
+  }
+  const index = users.indexOf(user);
+  users.splice(index, 1);
+  res.send(user);
+});
 
+// DELETE /api/users/:class
+app.delete("/api/users/:class", (req, res) => {
+  let classA = [];
+  let classB = [];
+  let classC = [];
+  let classD = [];
+  let classE = [];
+  let classF = [];
+
+  users.forEach((user) => {
+    let ip = user.ip_address.split(".");
+    if (ip[0] >= 1 && ip[0] <= 126) {
+      classA.push(user);
+    } else if (ip[0] >= 128 && ip[0] <= 191) {
+      classB.push(user);
+    } else if (ip[0] >= 192 && ip[0] <= 223) {
+      classC.push(user);
+    } else if (ip[0] >= 224 && ip[0] <= 239) {
+      classD.push(user);
+    } else if (ip[0] >= 240 && ip[0] <= 255) {
+      classE.push(user);
+    } else {
+      classF.push(user);
+    }
+  });
+
+  if (req.params.class === "A") {
+    users = classB.concat(classC, classD, classE, classF);
+  } else if (req.params.class === "B") {
+    users = classA.concat(classC, classD, classE, classF);
+  } else if (req.params.class === "C") {
+    users = classA.concat(classB, classD, classE, classF);
+  } else if (req.params.class === "D") {
+    users = classA.concat(classB, classC, classE, classF);
+  } else if (req.params.class === "E") {
+    users = classA.concat(classB, classC, classD, classF);
+  }
+  else {
+    users = classA.concat(classB, classC, classD, classE);
+  }
+  res.send(users);
+});
 
 
 /* Get Route to read data from json file and store it in 
@@ -199,10 +256,6 @@ app.get("/api/users/F", (req, res) => {
 
 }
 );
-
-
-
-
 
 
 app.listen(8080, () => {
