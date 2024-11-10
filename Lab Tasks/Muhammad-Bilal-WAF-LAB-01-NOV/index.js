@@ -59,6 +59,23 @@ app.put("/api/users/:id", (req, res) => {
   res.send(user);
 });
 
+// Patch /api/users/:id
+app.patch("/api/users/:id", (req, res) => {
+  const user = users.find((user) => user.id === parseInt(req.params.id));
+  if (!user) {
+    return res.status(404).send("The user with the given ID was not found");
+  }
+
+  const fieldsToUpdate = ['first_name', 'last_name', 'email', 'gender', 'ip_address', 'ORGANIZATION'];
+  fieldsToUpdate.forEach(field => {
+    if (req.body[field] !== undefined) {
+      user[field] = req.body[field];
+    }
+  });
+
+  res.send(user);
+});
+
 // DELETE /api/users/:id 
 app.delete("/api/users/:id", (req, res) => {
   const user = users.find((user) => user.id === parseInt(req.params.id));
